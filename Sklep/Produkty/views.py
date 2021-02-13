@@ -12,8 +12,9 @@ def index(request):
     kategorie = Kategoria.objects.all()
     null =      Produkty.objects.filter(kategoria__isnull = False)
     zawiera =   Produkty.objects.filter (opis__icontains= "myszka")
+    dane = {"kategorie": kategorie}
 
-    return HttpResponse(zawiera)
+    return render(request, "szablon.html", dane)
 
 def kategoria(request,id):
     kategoria_user = Kategoria.objects.get(pk=id)
@@ -21,8 +22,4 @@ def kategoria(request,id):
 
 def produkt (request, id):
     produkt_user = Produkty.objects.get(pk=id)
-    napis = "<h1>" + str(produkt_user) + "</h1>" + \
-            "<p>" + str(produkt_user.opis) + "</p>" + \
-            "<p>" + str(produkt_user.cena) + "</p>"
-
-    return HttpResponse(napis)
+    return HttpResponse(produkt_user)
